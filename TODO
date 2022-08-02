@@ -1,0 +1,25 @@
+1. node js file structure :
+
+- view all departments
+- view all roles
+- view all employee's
+- add a department 
+- add a role
+- add an employee 
+- update an employee role
+
+
+2. view all departments = formatted table showing department names and id's.
+
+3. view all roles = job title, role id, department that role belongs to, salary for that role in formatted table.
+
+4. view all employees = formatted table showing employe data, employee ids, firt names, last names, job titles, departments, salaries and manager that employee reports to.
+
+5. add department = enter the name and this is added to DB
+
+6. add role = enter name, salary and department for the role this is added to DB
+
+7. add employee = first name, last name, role, manager and then added to DB
+
+8. update employee role = select an employee and update role this is then stored in DB.
+
