@@ -1,6 +1,7 @@
 import mysql from 'mysql2';
 
 import inquirer from "inquirer";
+import { createConnection } from 'net';
 
 // import cTable from "console.table";
 // import { ftruncateSync } from 'fs';
@@ -30,6 +31,7 @@ import inquirer from "inquirer";
 // });
 
 performSearch();
+
 
 function performSearch() {
 
@@ -66,7 +68,7 @@ function performSearch() {
                 break
 
             case "Remove employees":
-                removeEmployees();
+                removeEmployee();
                 break
 
             case "Update employee role":
@@ -166,7 +168,7 @@ function addEmployees() {
 
     .then(function(answer) {
 
-        var newEmpMgr = " ";
+        let newEmpMgr = " ";
 
         let answerNEM = newEmployeeManager;
 
@@ -357,10 +359,133 @@ function removeEmployee() {
                 name: "choice",
                 type:"rawlist",
                 message: "Which employee do you want to delete?",
-                choices: functio
+                choices: function() {
+                    let choiceArray = [];
+                    for(let i = 1; i < results.length; i++) {
+                        let emp = " ";
+                        emp = `${results[i].id} ${results[i].first_name} ${results[i].last_name}`
+                        choiceArray.push(emp);
+                    }
+
+                    return choiceArray;
+                }
             }
         ])
+
+        .then(function(answer) {
+            deleteRemovedEmployee(answer);
+            return answer;
+        })
     })
 }
+
+function deleteRemovedEmployee(answer) {
+    let choiceStr = answer.choice.split(" ");
+    connection.query (
+        "DELETE FROM employee WHERE?",
+        [
+            {
+                id: parseInt(choiceStr[0])
+            }
+        ],
+
+        function (err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + "You have successfully deleted the EMPLOYEE from the database");
+            performSearch();
+        }
+    )
+}
+
+
+function updateEmployeeManager() {
+
+    let query = "SELECT employee.id, employee.first_name, employee.last_name";
+    query += "FROM employee";
+    
+
+    connection.query (query, function(err, results) {
+        if (err) throw err;
+        inquirer
+        .prompt([
+            {
+                name: "choice",
+                type: "rawlist",
+                message: "Which manager would you like to update?",
+                choices: function() {
+                    let choiceArray = [];
+                    for (let i = 1; i < results.length; i++) {
+                        let emp = " ";
+                        emp = `${results[i].id} ${results[i].first_name} ${results[i].last_name}`
+                        choiceArray.push(emp)
+                    }
+
+                    return choiceArray;
+
+                }
+            },
+            {
+                name: "managerUpdate",
+                type: "list",
+                message: "Assign a manager to this employee",
+                choice: ["Robert Downey Jr.', 'Scarlett Johansson', 'Chris Evans', 'Mark Ruffalo"]
+            }
+        ])
+
+        .then (function(answer) {
+            updateEmployeeManager(answer);
+            return answer;
+        })
+
+    })
+}
+
+function updateEmployeeManager(answer) {
+
+    let updateNewManager = "";
+
+    let answerMU = answer.managerUpdate;
+
+    if (answerMU === 'Robert Downey Jr.') {
+        updateNewManager = 5;
+    };
+
+    if (answerMU === 'Scarlett Johannson') {
+        updateNewManager = 3;
+    }
+
+    if (answerMU === 'Chris Evans') {
+        updateNewManager = 4;
+    }
+
+    if (answerMU === 'Mark Ruffalo') {
+        updateNewManager = 9;
+    }
+
+    let choiceStr = answer.choice.split(" ");
+
+    connection.query(
+        "UPDATE employee SET ? WHERE ?",
+        [
+            {
+                manager_id: newManager
+            },
+            {
+                id: parseInt(choiceStr[0])
+            }
+        ],
+
+        function(err,res) {
+            if(err) throw error;
+            console.log(res.affectedRows + "You have succesfully UPDATED the Employee's manager");
+            performSearch();
+        }
+    )
+}
+
+function endSession() {
+    console.log("SESSION ENDED");
+    connection.end();
+};
 
 
