@@ -4,6 +4,7 @@ import inquirer from "inquirer";
 
 import cTable from "console.table";
 import { ftruncateSync } from 'fs';
+import { consumers } from 'stream';
 
 
 //VARIABLES -- 
@@ -122,46 +123,85 @@ function addEmployees() {
     inquirer
     .prompt([
         {
-            name:
-            type:
-            message:
-        }
+            name: "newEmployeeFirstName",
+            type:"input",
+            message:"What is the new employee's first name?(Required Field)."
+        },
         {
-            name:
-            type:
-            message:
-        }
+            name:"newEmployeeLastName", 
+            type:"input",
+            message:"What is the new employee's last name?(Required Field)."
+        },
         {
-            name:
-            type:
-            message:
-        }
+            name: "newEmployeeDepartment",
+            type: "list",
+            message: "What department does the new employee work in?(Required Field).",
+            choices: ['Sales', 'Engineering', 'Finance', 'Legal']
+        },
         {
-            name:
-            type:
-            message:
-        }
+            name: "newEmployeeSalary",
+            type: "input",
+            message: "What is the new employee's salary (Required Field)."
+        },
         {
-            name:
-            type:
-            message:
-        }
+            name: "newEmployeeManager",
+            type: "list",
+            message: "Who is the new employee's manager?(Required Field).",
+            choices: ['Robert Downey Jr.', 'Scarlett Johansson', 'Chris Evans', 'Mark Ruffalo']
+        },
         {
-            name:
-            type:
-            message:
-        }
-        {
-            name:
-            type:
-            message:
-        }
-        {
-            name:
-            type:
-            message:
+            name:"newEmployeeRole",
+            type:"list",
+            message:"What is the new employee's role?(Required Field).",
+            choices: ['Salesperson', 'Software Engineer', 'Lead Engineer', 'Account Manager', 'Accountant', 'Sales Team Lead', 'Legal Team Lead', 'Lawyer']
         }
     ])
+
+    //Assigning employee manager's an ID.
+
+
+    .then(function(answer) {
+
+        let newEmpMgr = " ";
+
+        let answerNEM = newEmployeeManager;
+
+        if (answer.newEmployeeManager === "Robert Downey Jr.") {
+            newEmpMgr = 5;
+        }
+
+        if (answerNEM === "Scarlett Johansson") {
+            newEmpMgr = 3;
+        }
+
+        if (answerNEM === "Chris Evans") {
+            newEmpMgr = 4;
+        }
+
+        if (answerNEM === "Mark Ruffalo") {
+            newEmpMgr = 9;
+
+        }
+
+
+        let query = connection.query(
+            "INSERT INTO employee SET ?",
+
+
+            {
+                first_name: answer.newEmployeeFirstName,
+                last_name: answer.newEmployeeLastName,
+                emp_dept: answer.newEmployeeDepartment,
+                salary: answer.newEmployeeSalary,
+                roles_id: newEmployeeRole,
+                manager_id: newEmployeeManager
+            },
+
+            function (err, res) {
+                if (err) throw err;
+                console.log(res.affectedRows + "employee added!\n");
+                performSearch();
+            }
+        )
+    });
 }
-
-
