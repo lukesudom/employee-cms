@@ -23,3 +23,18 @@
 
 8. update employee role = select an employee and update role this is then stored in DB.
 
+
+DETAILS
+
+Department managers 
+
+roles = salesperson, software engineer, lead engineer, account manager, accountant, sales team lead, legal team lead, lawyer
+
+mgr 5 = sales rob
+
+mgr 3 = law scar 
+
+mgr 4 = engineering chris
+
+mgr 9 = finance mark
+

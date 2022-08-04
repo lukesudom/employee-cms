@@ -1,26 +1,29 @@
-import mysql from 'mysql2';
 
+
+
+import mysql from 'mysql2';
 import inquirer from "inquirer";
 import { createConnection } from 'net';
-
-// import cTable from "console.table";
+import consoletable from "console.table";
 // import { ftruncateSync } from 'fs';
 // import { consumers } from 'stream';
 // import { connect } from 'http2';
 // import { type } from 'os';
 
 
-//VARIABLES -- 
+var cTable = console.table;
 
-// var connection = mysql.createConnection({
-//     host: "localhost",
-//     port: 8080,
-//     user: "root",
+VARIABLES -- 
+
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 8080,
+    user: "root",
     
-//     password:"",
-//     database:"employees_db",
+    password:"",
+    database:"employees_db",
 
-// });
+});
 
 
 // connection.connect(function(err) {
@@ -60,7 +63,7 @@ function performSearch() {
                 break
 
             case "View all employees by manager":
-                viewAllEmployeesManager();
+                viewEmployeesByManager();
                 break
 
             case "Add employees":
@@ -109,7 +112,7 @@ function viewAllEmployees() {
     })
 };
 
-function viewEmpByManager() {
+function viewEmployeesByManager() {
     console.log("VIEWING EMPLOYEES BY MANAGER");
 
     var query = "SELECT manager.id, manager.mgr_name, employee.first_name, employee.last_name";
@@ -433,14 +436,14 @@ function updateEmployeeManager() {
         ])
 
         .then (function(answer) {
-            updateEmployeeManager(answer);
+            updateNewEmployeeManager(answer);
             return answer;
         })
 
     })
 }
 
-function updateEmployeeManager(answer) {
+function updateNewEmployeeManager(answer) {
 
     let updateNewManager = "";
 
