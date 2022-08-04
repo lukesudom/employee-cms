@@ -4,26 +4,20 @@
 import mysql from 'mysql2';
 import inquirer from "inquirer";
 import { createConnection } from 'net';
-import consoletable from "console.table";
-// import { ftruncateSync } from 'fs';
-// import { consumers } from 'stream';
-// import { connect } from 'http2';
-// import { type } from 'os';
+import {printTable} from "console-table-printer";
 
 
-var cTable = console.table;
+// VARIABLES -- 
 
-VARIABLES -- 
-
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 8080,
-    user: "root",
+// var connection = mysql.createConnection({
+//     host: "localhost",
+//     port: 8080,
+//     user: "root",
     
-    password:"",
-    database:"employees_db",
+//     password:"",
+//     database:"employees_db",
 
-});
+// });
 
 
 // connection.connect(function(err) {
@@ -92,7 +86,7 @@ function performSearch() {
 function viewAllDepartments() {
     connection.query("SELECT id, dept_name, salary FROM department", function (err, res){
         if (err) throw err;
-        console.table('Departments', res);
+        printTable('Departments', res);
         performSearch();
     });
 };
@@ -107,7 +101,7 @@ function viewAllEmployees() {
 
 
     connection.query(query, function(err, res){
-        console.table('ALL EMPLOYEES', res);
+        printTable('ALL EMPLOYEES', res);
         performSearch();
     })
 };
@@ -123,7 +117,7 @@ function viewEmployeesByManager() {
     
 
     connection.query(query, function(err,res){
-        console.table('EMPLOYEES GROUPED BY MANAGER', res);
+        printTable('EMPLOYEES GROUPED BY MANAGER', res);
         performSearch();
     })
 };
