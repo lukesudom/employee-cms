@@ -3,31 +3,28 @@
 
 import mysql from 'mysql2';
 import inquirer from "inquirer";
-import { createConnection } from 'net';
 import {printTable} from "console-table-printer";
 
 
 // VARIABLES -- 
 
-// var connection = mysql.createConnection({
-//     host: "localhost",
-//     port: 8080,
-//     user: "root",
-    
-//     password:"",
-//     database:"employees_db",
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password:"",
+    database:"employees_db",
 
-// });
+});
 
 
-// connection.connect(function(err) {
-//     if (err) throw err;
-//     console.log ("you are connected as id:" + connection.threadId + "\n");
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log ("you are connected as id:" + connection.threadId + "\n");
 
-//     performSearch();
-// });
+    performSearch();
+});
 
-performSearch();
 
 
 function performSearch() {

@@ -7,9 +7,9 @@ VALUES
 
 
 INSERT INTO roles (title, salary, department_id)
-VALUES ('Sales', 85000, 1)
-       ('Engineering', 100000, 2)
-       ('Law', 90000, 3)
+VALUES ('Sales', 85000, 1),
+       ('Engineering', 100000, 2),
+       ('Law', 90000, 3),
        ('Finance', 95000, 4);
 
 INSERT INTO employee (first_name, last_name, employee_department, salary, manager_id, roles_id)
