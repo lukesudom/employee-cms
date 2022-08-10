@@ -1,44 +1,23 @@
-DROP DATABASE IF EXISTS employees_db;
-
-
-CREATE DATABASE employees_db;
-
-USE employees_db;
-
-Create Tables 
-
-CREATE TABLE department (
-    id INT NOT NULL AUTO_INCREMENT,
-    deptartment_name VARCHAR(30) NOT NUll,
-    PRIMARY KEY (id)
-);
-
+DROP DATABASE IF EXISTS employee_db;
+CREATE DATABASE employee_db;
+USE employee_db;
+DROP TABLE IF EXISTS departments;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS employees;
+CREATE TABLE departments (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(40) NOT NULL
+); 
 CREATE TABLE roles (
-   id INT NOT NULL,
-   title VARCHAR(30),
-   salary DECIMAL,
-   department_id INT,
-   FOREIGN KEY (department_id) REFERENCES department (id)
-   PRIMARY KEY (id)
-   ON DELETE SET NULL
-);
-
-CREATE TABLE employee (
-    id INT NOT NULL,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    roles_id INT NOT NULL,
-    employee_department VARCHAR(30) NOT NULL,
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(40) NOT NULL,
     salary DECIMAL NOT NULL,
-    manager_id INT,
-    FOREIGN KEY (manager_id) REFERENCES (employee_id)
-    FOREIGN KEY (roles_id) REFERENCES roles (id)
-    PRIMARY KEY (id)
-    ON DELETE SET NULL
-
+    department_id INTEGER NOT NULL
 );
-
-CREATE TABLE manager (
-    id INT NOT NULL,
-    mgr_name VARCHAR(30) NOT NULL
+CREATE TABLE employees (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    role_id INTEGER NOT NULL,
+    manager VARCHAR(40) NOT NULL
 );
